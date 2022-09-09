@@ -2,50 +2,6 @@ package syr.edu.hw2;
 
 public class Book {
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((author == null) ? 0 : author.hashCode());
-        result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
-        result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
-        result = prime * result + ((title == null) ? 0 : title.hashCode());
-        result = prime * result + yearPublished;
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        Book other = (Book) obj;
-        if (author == null) {
-            if (other.author != null)
-                return false;
-        } else if (!author.equals(other.author))
-            return false;
-        if (isbn == null) {
-            if (other.isbn != null)
-                return false;
-        } else if (!isbn.equals(other.isbn))
-            return false;
-        if (publisher == null) {
-            if (other.publisher != null)
-                return false;
-        } else if (!publisher.equals(other.publisher))
-            return false;
-        if (title == null) {
-            if (other.title != null)
-                return false;
-        } else if (!title.equals(other.title))
-            return false;
-        if (yearPublished != other.yearPublished)
-            return false;
-        return true;
-    }
-
     private String author;
     private String title;
     private String publisher;
@@ -79,7 +35,39 @@ public class Book {
     @Override
     public String toString() {
         return "Book{author=" + author + ", isbn=" + isbn + ", publisher=" + publisher + ", title=" + title
-                + ", yearPublished=" + yearPublished + "}";
+                + ", yearPublished=" + yearPublished + "} \n";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || this.getClass() != obj.getClass())
+            return false;
+        Book other = (Book) obj;
+        if (!this.author.equals(other.author))
+            return false;
+        if (!this.isbn.equals(other.isbn))
+            return false;
+        if (!this.publisher.equals(other.publisher))
+            return false;
+        if (!this.title.equals(other.title))
+            return false;
+        if (this.yearPublished != other.yearPublished)
+            return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((author == null) ? 0 : author.hashCode());
+        result = prime * result + ((isbn == null) ? 0 : isbn.hashCode());
+        result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        result = prime * result + yearPublished;
+        return result;
     }
 
     public static void main(String[] args) {
