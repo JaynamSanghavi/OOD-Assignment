@@ -70,9 +70,29 @@ public class Book {
         return result;
     }
 
+    /*
+     * 
+     * For testing purpose
+     * Param: String array
+     * Return: Void
+     */
+
     public static void main(String[] args) {
-        Book b1 = new Book("Holden Karau", "Learning Spark", "O'Reilly", "9781449358624", 2015);
+        Book b1 = new Book(null, "Learning Spark", "O'Reilly", "9781449358624", 2015);
         Book b2 = new Book("Norman Matloff", "The Art of R Programming", "No Starch Press", "9781593273842", 2011);
         Book b3 = new Book("Alan A. A. Donovan", "The Go Programming Language", "Addison Wesley", "9780134190440", 2016);
+        Book b4 = new Book("", "lear", "", "9781449358624",0);
+        Book b5 = new Book("Holden Karau 1", "Learning Spark", "O'Reilly", "9781449358624", 2015);
+        Book b6 = new Book("", "", "", " ",0);
+        Library l = new Library();
+        l.add(b1);
+        l.add(b2);
+        l.add(b3);
+        l.add(b1);
+        l.add(b5);
+        //l.add(b2);
+        // System.out.println(l.search(b4));
+        // System.out.println(l.search(b2));
+        System.out.println(l.search(b6));
     }
 }
