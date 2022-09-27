@@ -1,3 +1,8 @@
+/*
+ * Assumption:
+ * There are different kind of question type, for that we use different list.
+ * Separate method for adding and getting answer defined for administer and liekert question type.
+ */
 package syr.edu.hw4;
 
 import java.io.BufferedReader;
@@ -12,23 +17,34 @@ public class Questionnaire {
         TRUE
     }
     List<String> questions;
+    List<String> liekertQuestions;
     public Questionnaire() {
         questions = new ArrayList<>();
+        liekertQuestions = new ArrayList<>();
     }
 
     /*
-     * Add the question to the question list
+     * Add the administer question to the administer question list
      * Param: String
      * Return: void
      */
-    public void addQuestion(String s) {
+    public void addAdministerQuestion(String s) {
         if(s != null || s != "")
             questions.add(s);
     }
 
     /*
-     * Record the answer depending on the question type and save in the answer list.
-     * ASSUMPTION: for question where answer is true or false, question should have "?".
+     * Add the liekert question to the liekert question list
+     * Param: String
+     * Return: void
+     */
+    public void addLiekertQuestion(String s) {
+        if(s != null || s != "")
+            liekertQuestions.add(s);
+    }
+
+    /*
+     * Record the answer for the administer question type and save in the answer list.
      * Param: none
      * Return: List of String
      * 
@@ -38,24 +54,51 @@ public class Questionnaire {
         List<String> answers = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         for (String s: questions) {
-            if(s.trim().contains("?")){
-                System.out.println("True or False: ");
-            }else{
-                System.out.println("Rate between 1-5 where \n5 is Strongly Agree\n4 is Somewhat Agree\n3 is Neutral\n2 is Somewhat Disagree\n1 is Strong Disagree");
-            }
+            System.out.println("True or False: ");
             System.out.println(s);
             String response = "";
             boolean validAnswer = false;
             while(!validAnswer){
                 try {
                     response = reader.readLine();
-                    if(s.trim().contains("?")){
+                    if(response.length() > 0){
                         if(!response.trim().equalsIgnoreCase(ANSWERS.FALSE.name()) && !response.trim().equalsIgnoreCase(ANSWERS.TRUE.name())){
                             System.out.println("Answer can be true or false, please answer the following question " + s + " again.");
                         }else{
                             validAnswer = true;
                         }
                     }else{
+                        System.out.println("Please provide an answer");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if(validAnswer)
+                    answers.add(response);
+            }
+        }
+        return answers;
+    }
+
+    /*
+     * Record the answer for the liekert question type and save in the answer list.
+     * Param: none
+     * Return: List of String
+     * 
+     */
+    
+    public List<String> liekertQuestionnaire() {
+        List<String> answers = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        for (String s: liekertQuestions) {
+            System.out.println("Rate between 1-5 where \n5 is Strongly Agree\n4 is Somewhat Agree\n3 is Neutral\n2 is Somewhat Disagree\n1 is Strong Disagree");
+            System.out.println(s);
+            String response = "";
+            boolean validAnswer = false;
+            while(!validAnswer){
+                try {
+                    response = reader.readLine();
+                    if(response.length() > 0){
                         try{
                             int answer = Integer.parseInt(response);
                             if(answer < 0 || answer > 5){
@@ -66,6 +109,8 @@ public class Questionnaire {
                         }catch(NumberFormatException e){
                             System.out.println("Please provide a valid number");
                         }
+                    }else{
+                        System.out.println("Please provide an answer");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -79,11 +124,12 @@ public class Questionnaire {
 
     public static void main(String[] args) {
         Questionnaire q = new Questionnaire();
-        q.addQuestion("Are you awake?");
-        q.addQuestion("Have you had coffee?");
-        q.addQuestion("Are you ready to get to work?");
-        q.addQuestion("CSE 687 is awesome.");
+        q.addAdministerQuestion("Are you awake?");
+        q.addAdministerQuestion("Have you had coffee?");
+        q.addAdministerQuestion("Are you ready to get to work?");
+        q.addLiekertQuestion("CSE 687 is awesome.");
         List<String> answers = q.administerQuestionnaire();
+        answers.addAll(q.liekertQuestionnaire());
         System.out.println("complete!");
         System.out.println(answers);
     }
