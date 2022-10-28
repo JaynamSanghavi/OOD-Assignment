@@ -21,7 +21,7 @@ public class AuthorController {
 
 
     @PostMapping(value = "/{bookId}/addAuthor")
-    public  ResponseEntity<Author> addAuthor(@PathVariable(value = "bookId") Long bookId, @RequestBody Author author){
+    public ResponseEntity<Object> addAuthor(@PathVariable(value = "bookId") Long bookId, @RequestBody Author author){
         return authorService.addAuthor(bookId, author);
     }
 
@@ -31,7 +31,7 @@ public class AuthorController {
     }
 
     @PutMapping("/editAuthor/{authorId}")
-    public ResponseEntity<Author> updateAuthor(@PathVariable("authorId") long authorId, @RequestBody Author authorR) {
+    public ResponseEntity<Object> updateAuthor(@PathVariable("authorId") long authorId, @RequestBody Author authorR) {
         return authorService.updateAuthor(authorId,authorR);
     }
 

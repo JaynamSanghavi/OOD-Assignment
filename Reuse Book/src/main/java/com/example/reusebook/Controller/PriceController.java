@@ -28,7 +28,7 @@ public class PriceController {
     }
 
     @PutMapping("/editPrice/{priceId}")
-    public ResponseEntity<Price> updatePrice(@PathVariable("priceId") long priceId, @RequestBody Price priceR) {
+    public ResponseEntity<Object> updatePrice(@PathVariable("priceId") long priceId, @RequestBody Price priceR) {
         return priceService.updatePrice(priceId,priceR);
     }
 

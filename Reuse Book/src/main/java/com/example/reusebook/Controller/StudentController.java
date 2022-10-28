@@ -18,13 +18,13 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping("/addStudent")
-    public  ResponseEntity<Student> addStudent(@RequestBody Student student){
+    public  ResponseEntity<Object> addStudent(@RequestBody Student student){
         System.out.println(student);
         return studentService.addStudent(student);
     }
 
     @PutMapping("/editStudent/{studentId}")
-    public ResponseEntity<Student> updateStudent(@PathVariable("studentId") long studentId, @RequestBody Student studentR) {
+    public ResponseEntity<Object> updateStudent(@PathVariable("studentId") long studentId, @RequestBody Student studentR) {
         return studentService.updateStudent(studentId,studentR);
     }
 

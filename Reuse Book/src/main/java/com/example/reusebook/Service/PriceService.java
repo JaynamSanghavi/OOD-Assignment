@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PriceService {
@@ -24,9 +25,18 @@ public class PriceService {
         return new ResponseEntity<>(prices, HttpStatus.OK);
     }
 
-    public ResponseEntity<Price> updatePrice(long priceId, Price priceR) {
-        Price price = priceRepository.findById(priceId).orElseThrow();
-        price.setPrice(priceR.getPrice());
-        return new ResponseEntity<>(priceRepository.save(price), HttpStatus.OK);
+    public ResponseEntity<Object> updatePrice(long priceId, Price priceR) {
+        Optional<Price> price = priceRepository.findById(priceId);
+        if(price.isPresent()){
+            Price p = price.get();
+            if(priceR.getPrice() != null && !priceR.getPrice().isBlank() && !priceR.getPrice().isEmpty()){
+                p.setPrice(priceR.getPrice());
+                return new ResponseEntity<>(priceRepository.save(p), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>("Bad Request for price",HttpStatus.BAD_REQUEST);
+            }
+        }else{
+            return new ResponseEntity<>("Price Id not found",HttpStatus.NOT_FOUND);
+        }
     }
 }
