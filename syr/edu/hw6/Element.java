@@ -2,7 +2,7 @@ package syr.edu.hw6;
 public class Element{
     String s;   
     Element(String st){
-        if(!st.isEmpty() || !st.isBlank()) 
+        if(st != null) 
             s = st;
         else
             s = "";

@@ -9,7 +9,7 @@ public class DecorateDesign {
         pangram[4] = new Element("jumps");
         pangram[5] = new Element("over");
         pangram[6] = new Element("the");
-        pangram[7] = new Strikethru(pangram[2]);
+        pangram[7] = new Strikethru(new Bold(new Italic("Test")));
         pangram[8] = new Element("");
 
         StringBuffer justText = new StringBuffer();
