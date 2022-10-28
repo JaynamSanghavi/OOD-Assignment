@@ -42,10 +42,14 @@ public class BookService {
         }
     }
 
+    private String calculateDiscount(Price p){
+        return String.valueOf(Math.round(Integer.parseInt(p.getPrice()) * AppConstants.DISCOUNT));
+    }
+
     private Price getPrice(BookPojo bookPojo,Book book){
         if(bookPojo.getId() != null){
             Price p = priceRepository.findByIdOrderByIdDesc(bookPojo.getId());
-            return new Price(book,String.valueOf(Math.round(Integer.parseInt(p.getPrice()) * AppConstants.DISCOUNT)));
+            return new Price(book,calculateDiscount(p));
         }else{
             return new Price(book, bookPojo.getPrice());
         }
