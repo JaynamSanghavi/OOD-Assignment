@@ -18,6 +18,9 @@ public class Book {
     @Column(name = "Edition")
     private String edition;
 
+    @Column(name = "YearOfPublication")
+    private String yearOfPublication;
+
     @Column(name = "isAvailable")
     private boolean isAvailable;
 
@@ -25,11 +28,12 @@ public class Book {
 
     }
 
-    public Book(String title, String isbn, String edition, boolean isAvailable) {
+    public Book(String title, String isbn, String edition, String yearOfPublication ,boolean isAvailable) {
         this.title = title;
         this.isbn = isbn;
         this.edition = edition;
         this.isAvailable = isAvailable;
+        this.yearOfPublication = yearOfPublication;
     }
 
     public long getId() {
@@ -61,6 +65,14 @@ public class Book {
         this.edition = edition;
     }
 
+    public String getYearOfPublication() {
+        return yearOfPublication;
+    }
+
+    public void setYearOfPublication(String yearOfPublication) {
+        this.yearOfPublication = yearOfPublication;
+    }
+
     public boolean getisAvailable() {
         return isAvailable;
     }
@@ -76,7 +88,8 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", edition='" + edition + '\'' +
-                ", isAvailable='" + isAvailable + '\'' +
+                ", yearOfPublication='" + yearOfPublication + '\'' +
+                ", isAvailable=" + isAvailable +
                 '}';
     }
 }

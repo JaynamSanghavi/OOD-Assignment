@@ -9,6 +9,8 @@ public class BookPojo {
 
     private String edition;
 
+    private String yearOfPublication;
+
     private boolean isAvailable;
 
     private String price;
@@ -69,5 +71,13 @@ public class BookPojo {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public String getYearOfPublication() {
+        return yearOfPublication;
+    }
+
+    public void setYearOfPublication(String yearOfPublication) {
+        this.yearOfPublication = yearOfPublication;
     }
 }

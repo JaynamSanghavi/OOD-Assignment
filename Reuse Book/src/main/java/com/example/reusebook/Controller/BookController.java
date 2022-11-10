@@ -3,6 +3,7 @@ package com.example.reusebook.Controller;
 import com.example.reusebook.Constants.AppConstants;
 import com.example.reusebook.Model.Book;
 import com.example.reusebook.Pojo.BookPojo;
+import com.example.reusebook.Repository.TransactionRepository;
 import com.example.reusebook.Service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

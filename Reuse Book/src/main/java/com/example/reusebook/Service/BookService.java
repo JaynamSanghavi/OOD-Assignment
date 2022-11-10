@@ -1,6 +1,7 @@
 package com.example.reusebook.Service;
 
 import com.example.reusebook.Constants.AppConstants;
+import com.example.reusebook.Interface.DiscountStrategy;
 import com.example.reusebook.Model.*;
 import com.example.reusebook.Pojo.BookPojo;
 import com.example.reusebook.Repository.*;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
 import java.util.List;
 
 @Service
@@ -36,18 +38,29 @@ public class BookService {
         if(bookPojo.getId() != null){
             return bookRepository.findById(bookPojo.getId()).orElseThrow();
         }else{
-            return new Book(bookPojo.getTitle(), bookPojo.getIsbn(), bookPojo.getEdition(), true);
+            return new Book(bookPojo.getTitle(), bookPojo.getIsbn(), bookPojo.getEdition(), bookPojo.getYearOfPublication(), true);
         }
     }
 
-    private String calculateDiscount(Price p){
-        return String.valueOf(Math.round(Integer.parseInt(p.getPrice()) * AppConstants.DISCOUNT));
+
+
+    private String calculateDiscount(Price p,Book book){
+        int sellTransaction = transactionRepository.getSellCount(book.getId());
+        DiscountStrategy discountStrategy;
+        System.out.println("Hello in " +(Integer.parseInt(book.getYearOfPublication()) - Year.now().getValue()) + " and transaction is : "+ sellTransaction);
+
+        if(Year.now().getValue() - Integer.parseInt(book.getYearOfPublication()) <= 5 ){
+            discountStrategy = new NewPublicationBook();
+            return discountStrategy.getDiscountPrint(Integer.parseInt(p.getPrice()),sellTransaction);
+        }
+        discountStrategy = new OldPublicationBook();
+        return discountStrategy.getDiscountPrint(Integer.parseInt(p.getPrice()),sellTransaction);
     }
 
     private Price getPrice(BookPojo bookPojo,Book book){
         if(bookPojo.getId() != null){
             Price p = priceRepository.findByIdOrderByIdDesc(bookPojo.getId());
-            return new Price(book,calculateDiscount(p));
+            return new Price(book,calculateDiscount(p,book));
         }else{
             return new Price(book, bookPojo.getPrice());
         }
